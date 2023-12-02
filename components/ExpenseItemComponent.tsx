@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ExpenseItem} from '../models/ExpenseItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {BlackColor} from '../utils/Color';
+import {BlackColor, RedColor} from '../utils/Color';
 import {numberWithCommas} from '../utils/NumberFormat';
 import {GlobalStyles} from '../styles';
 
@@ -11,11 +11,13 @@ export const ExpenseItemComponent: React.FC<{
   index: number;
   cat_name: string;
   group_date: string;
+  on_delete: Function;
 }> = ({
-  expense: {id, title, date, amount, type},
+  expense: {id, title, amount, type},
   index,
   cat_name,
   group_date,
+  on_delete,
 }) => {
   return (
     <View style={styles.expenseItem}>
@@ -43,6 +45,12 @@ export const ExpenseItemComponent: React.FC<{
             </Text>
           )}
         </View>
+        <TouchableOpacity onPress={() => on_delete(id, index)}>
+          <View style={styles.expenseDeleteContainer}>
+            <Icon name="trash" color={RedColor} />
+            <Text style={styles.expenseDelete}>Hapus</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -76,9 +84,12 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: BlackColor,
   },
+  expenseDeleteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
   expenseDelete: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 4,
+    color: RedColor,
   },
 });

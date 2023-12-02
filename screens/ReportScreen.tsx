@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BlackColor, PrimaryColor} from '../utils/Color';
 import {ExpenseDayItem} from '../models/ExpenseDayItem';
@@ -39,15 +39,17 @@ function ReportScreen({navigation}: {navigation: any}) {
   }, [isFocused, loadDataCallback, navigation]);
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        {expenses.map((expense, i) => (
-          <ExpenseDayItemComponent
-            key={expense.id}
-            expense={expense}
-            index={i}
-          />
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          {expenses.map((expense, i) => (
+            <ExpenseDayItemComponent
+              key={expense.id}
+              expense={expense}
+              index={i}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

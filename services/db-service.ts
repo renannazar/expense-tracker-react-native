@@ -113,3 +113,8 @@ export const getExpenseDay = async (
     throw Error('Failed to get expenses !!!');
   }
 };
+
+export const deleteExpense = async (db: SQLiteDatabase, id: number) => {
+  const deleteQuery = `DELETE from expenses where id = ${id}`;
+  await db.executeSql(deleteQuery);
+};

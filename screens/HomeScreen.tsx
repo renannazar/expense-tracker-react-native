@@ -12,6 +12,7 @@ import {BlackColor, GreenColor, PrimaryColor, RedColor} from '../utils/Color';
 import {ExpenseItem} from '../models/ExpenseItem';
 import {
   createTable,
+  deleteExpense,
   getCategory,
   getDBConnection,
   getExpense,
@@ -97,6 +98,35 @@ function HomeScreen({navigation}: {navigation: any}) {
     return '';
   };
 
+  const deleteItem = async (id: number) => {
+    try {
+      const db = await getDBConnection();
+      await deleteExpense(db, id);
+      // Improve delete scene, using an index instead refresh all database
+      let newExpenses = expenses.filter(e => {
+        return e.id !== id;
+      });
+
+      setExpenses(newExpenses);
+
+      // Check summary data
+      var totalSpend = 0;
+      var totalIncome = 0;
+      newExpenses.forEach(expense => {
+        if (expense.type === 'Pengeluaran') {
+          totalSpend += expense.amount;
+        } else {
+          totalIncome += expense.amount;
+        }
+      });
+      setSummarySpend(totalSpend.toString());
+      setSummaryIncome(totalIncome.toString());
+      setSummarySaving((totalIncome - totalSpend).toString());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <SafeAreaView>
       <View>
@@ -133,6 +163,7 @@ function HomeScreen({navigation}: {navigation: any}) {
                 index={i}
                 cat_name={getCategoryName(expense.category_id)}
                 group_date={getGroupDate(expense, i)}
+                on_delete={deleteItem}
               />
             ))}
           </View>
