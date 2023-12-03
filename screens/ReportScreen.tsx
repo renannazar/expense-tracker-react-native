@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {BlackColor, PrimaryColor} from '../utils/Color';
 import {ExpenseDayItem} from '../models/ExpenseDayItem';
@@ -7,12 +7,17 @@ import {
   createTable,
   getDBConnection,
   getExpenseDay,
+  getExpenseMonth,
 } from '../services/db-service';
-import {useIsFocused} from '@react-navigation/native';
 import {ExpenseDayItemComponent} from '../components/ExpenseDayItemComponent';
+import {Picker} from '@react-native-picker/picker';
+import {ExpenseMonthItem} from '../models/ExpenseMonthItem';
+import {ExpenseMonthItemComponent} from '../components/ExpenseMonthItemComponent';
 
-function ReportScreen({navigation}: {navigation: any}) {
+function ReportScreen() {
   const [expenses, setExpenses] = useState<ExpenseDayItem[]>([]);
+  const [monthExpenses, setMonthExpenses] = useState<ExpenseMonthItem[]>([]);
+  const [selectedType, setSelectedType] = useState('Harian');
 
   const loadDataCallback = useCallback(async () => {
     try {
@@ -27,28 +32,54 @@ function ReportScreen({navigation}: {navigation: any}) {
     }
   }, []);
 
-  // Using use focus effect for force refresh data when switch between screen
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      if (isFocused) {
-        loadDataCallback();
+  const loadMothDataCallback = useCallback(async () => {
+    try {
+      const db = await getDBConnection();
+      await createTable(db);
+      const storedMonthExpense = await getExpenseMonth(db);
+      console.log(storedMonthExpense);
+      if (storedMonthExpense.length > 0) {
+        setMonthExpenses(storedMonthExpense);
       }
-    });
-    // console.log(totalFocused);
-  }, [isFocused, loadDataCallback, navigation]);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedType === 'Harian') {
+      loadDataCallback();
+    } else {
+      loadMothDataCallback();
+    }
+  }, [loadDataCallback, loadMothDataCallback, selectedType]);
+
+  function renderExpenseItem() {
+    if (selectedType === 'Harian') {
+      return expenses.map((expense, i) => (
+        <ExpenseDayItemComponent key={expense.id} expense={expense} index={i} />
+      ));
+    } else {
+      return monthExpenses.map((expense, i) => (
+        <ExpenseMonthItemComponent key={i} expense={expense} index={i} />
+      ));
+    }
+  }
+
   return (
     <SafeAreaView>
+      <View style={styles.container}>
+        <Text>Pilih Kategori Laporan</Text>
+        <Picker
+          style={styles.selectInput}
+          selectedValue={selectedType}
+          onValueChange={setSelectedType}>
+          <Picker.Item label="Harian" value="Harian" />
+          <Picker.Item label="Bulanan" value="Bulanan" />
+        </Picker>
+      </View>
       <ScrollView>
-        <View style={styles.container}>
-          {expenses.map((expense, i) => (
-            <ExpenseDayItemComponent
-              key={expense.id}
-              expense={expense}
-              index={i}
-            />
-          ))}
-        </View>
+        <View style={styles.container}>{renderExpenseItem()}</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -92,5 +123,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: BlackColor,
     fontSize: 16,
+  },
+  selectInput: {
+    backgroundColor: 'white',
+    marginTop: 5,
   },
 });

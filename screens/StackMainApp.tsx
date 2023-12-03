@@ -77,7 +77,7 @@ export default function StackMainApp() {
         name="ReportScreen"
         component={ReportScreen}
         options={{
-          title: 'Laporan Harian',
+          title: 'Laporan Keuangan',
           tabBarLabel: 'Laporan',
           tabBarIcon: props => {
             return IconComponent(

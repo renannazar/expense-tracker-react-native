@@ -6,6 +6,7 @@ import {
 import {CategoryItem} from '../models/CategoryItem';
 import {ExpenseItem} from '../models/ExpenseItem';
 import {ExpenseDayItem} from '../models/ExpenseDayItem';
+import {ExpenseMonthItem} from '../models/ExpenseMonthItem';
 
 enablePromise(true);
 
@@ -101,6 +102,26 @@ export const getExpenseDay = async (
     const expenseItems: ExpenseDayItem[] = [];
     const results = await db.executeSql(
       'SELECT id, date, type, SUM(amount) as total FROM expenses GROUP BY date, type ORDER BY date DESC, type DESC',
+    );
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        expenseItems.push(result.rows.item(index));
+      }
+    });
+    return expenseItems;
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to get expenses !!!');
+  }
+};
+
+export const getExpenseMonth = async (
+  db: SQLiteDatabase,
+): Promise<ExpenseMonthItem[]> => {
+  try {
+    const expenseItems: ExpenseMonthItem[] = [];
+    const results = await db.executeSql(
+      "SELECT STRFTIME('%m-%Y', date) AS month, type, SUM(amount) as total FROM expenses GROUP BY STRFTIME('%m-%Y', date), type ORDER BY date DESC, type DESC",
     );
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
