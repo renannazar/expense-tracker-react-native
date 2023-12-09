@@ -14,7 +14,7 @@ import RNFS from 'react-native-fs';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
 
-function SettingScreen() {
+function SettingScreen({navigation}: {navigation: any}) {
   const backupData = async () => {
     try {
       var libDirectory = RNFS.DocumentDirectoryPath.replace(
@@ -77,6 +77,10 @@ function SettingScreen() {
     }
   };
 
+  const launchStackFirstApp = () => {
+    navigation.navigate('stackFirstApp');
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -99,6 +103,11 @@ function SettingScreen() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRestore} onPress={restoreData}>
           <Text style={GlobalStyles.colorWhite}>Restore Data</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btnLaunch}
+          onPress={launchStackFirstApp}>
+          <Text>Ubah Bahasa dan Mata Uang</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -131,5 +140,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 10,
+  },
+  btnLaunch: {
+    marginTop: 30,
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 });

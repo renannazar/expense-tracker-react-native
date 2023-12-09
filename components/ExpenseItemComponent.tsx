@@ -12,12 +12,14 @@ export const ExpenseItemComponent: React.FC<{
   cat_name: string;
   group_date: string;
   on_delete: Function;
+  currency: string | undefined;
 }> = ({
   expense: {id, title, amount, type},
   index,
   cat_name,
   group_date,
   on_delete,
+  currency,
 }) => {
   return (
     <View style={styles.expenseItem}>
@@ -37,11 +39,13 @@ export const ExpenseItemComponent: React.FC<{
           </View>
           {type === 'Pengeluaran' ? (
             <Text style={GlobalStyles.colorRed}>
-              - Rp{numberWithCommas(amount.toString())}
+              - {currency}
+              {numberWithCommas(amount.toString())}
             </Text>
           ) : (
             <Text style={GlobalStyles.colorGreen}>
-              + Rp{numberWithCommas(amount.toString())}
+              + {currency}
+              {numberWithCommas(amount.toString())}
             </Text>
           )}
         </View>

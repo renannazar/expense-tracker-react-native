@@ -8,7 +8,8 @@ import {GlobalStyles} from '../styles';
 export const ExpenseMonthItemComponent: React.FC<{
   expense: ExpenseMonthItem;
   index: number;
-}> = ({expense: {month, type, total}}) => {
+  currency: string | undefined;
+}> = ({expense: {month, type, total}, currency}) => {
   return (
     <View>
       <View style={styles.expenseContainer}>
@@ -19,11 +20,13 @@ export const ExpenseMonthItemComponent: React.FC<{
           </View>
           {type === 'Pengeluaran' ? (
             <Text style={GlobalStyles.colorRed}>
-              - Rp{numberWithCommas(total.toString())}
+              - {currency}
+              {numberWithCommas(total.toString())}
             </Text>
           ) : (
             <Text style={GlobalStyles.colorGreen}>
-              + Rp{numberWithCommas(total.toString())}
+              + {currency}
+              {numberWithCommas(total.toString())}
             </Text>
           )}
         </View>

@@ -21,6 +21,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {ExpenseItemComponent} from '../components/ExpenseItemComponent';
 import {CategoryItem} from '../models/CategoryItem';
 import {numberWithCommas} from '../utils/NumberFormat';
+import {MMKV} from 'react-native-mmkv';
 
 function HomeScreen({navigation}: {navigation: any}) {
   const [expenses, setExpenses] = useState<ExpenseItem[]>([]);
@@ -28,6 +29,9 @@ function HomeScreen({navigation}: {navigation: any}) {
   const [summarySpend, setSummarySpend] = useState<string>('0');
   const [summaryIncome, setSummaryIncome] = useState<string>('0');
   const [summarySaving, setSummarySaving] = useState<string>('0');
+
+  const storage = new MMKV();
+  const appCurrency = storage.getString('app_currency');
 
   const loadDataCallback = useCallback(async () => {
     try {
@@ -142,17 +146,26 @@ function HomeScreen({navigation}: {navigation: any}) {
             <View style={styles.heroCardItem}>
               <Icon name="minus" color={RedColor} size={25} />
               <Text style={styles.heroCardItemTitle}>Pengeluaran</Text>
-              <Text>Rp{numberWithCommas(summarySpend)}</Text>
+              <Text>
+                {appCurrency}
+                {numberWithCommas(summarySpend)}
+              </Text>
             </View>
             <View style={styles.heroCardItem}>
               <Icon name="plus" color={GreenColor} size={25} />
               <Text style={styles.heroCardItemTitle}>Pemasukkan</Text>
-              <Text>Rp{numberWithCommas(summaryIncome)}</Text>
+              <Text>
+                {appCurrency}
+                {numberWithCommas(summaryIncome)}
+              </Text>
             </View>
             <View style={styles.heroCardItem}>
               <Icon name="credit-card" color={BlackColor} size={25} />
               <Text style={styles.heroCardItemTitle}>Penyimpanan</Text>
-              <Text>Rp{numberWithCommas(summarySaving)}</Text>
+              <Text>
+                {appCurrency}
+                {numberWithCommas(summarySaving)}
+              </Text>
             </View>
           </View>
           <View>
@@ -164,6 +177,7 @@ function HomeScreen({navigation}: {navigation: any}) {
                 cat_name={getCategoryName(expense.category_id)}
                 group_date={getGroupDate(expense, i)}
                 on_delete={deleteItem}
+                currency={appCurrency}
               />
             ))}
           </View>

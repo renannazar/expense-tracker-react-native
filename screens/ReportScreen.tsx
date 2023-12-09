@@ -13,11 +13,15 @@ import {ExpenseDayItemComponent} from '../components/ExpenseDayItemComponent';
 import {Picker} from '@react-native-picker/picker';
 import {ExpenseMonthItem} from '../models/ExpenseMonthItem';
 import {ExpenseMonthItemComponent} from '../components/ExpenseMonthItemComponent';
+import {MMKV} from 'react-native-mmkv';
 
 function ReportScreen() {
   const [expenses, setExpenses] = useState<ExpenseDayItem[]>([]);
   const [monthExpenses, setMonthExpenses] = useState<ExpenseMonthItem[]>([]);
   const [selectedType, setSelectedType] = useState('Harian');
+
+  const storage = new MMKV();
+  const appCurrency = storage.getString('app_currency');
 
   const loadDataCallback = useCallback(async () => {
     try {
@@ -57,11 +61,21 @@ function ReportScreen() {
   function renderExpenseItem() {
     if (selectedType === 'Harian') {
       return expenses.map((expense, i) => (
-        <ExpenseDayItemComponent key={expense.id} expense={expense} index={i} />
+        <ExpenseDayItemComponent
+          key={expense.id}
+          expense={expense}
+          index={i}
+          currency={appCurrency}
+        />
       ));
     } else {
       return monthExpenses.map((expense, i) => (
-        <ExpenseMonthItemComponent key={i} expense={expense} index={i} />
+        <ExpenseMonthItemComponent
+          key={i}
+          expense={expense}
+          index={i}
+          currency={appCurrency}
+        />
       ));
     }
   }
