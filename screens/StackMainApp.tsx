@@ -10,12 +10,14 @@ import {
   AddScreen,
 } from '.';
 import {BlackColor, PrimaryColor} from '../utils/Color';
+import {useTranslation} from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 const colorButton = BlackColor;
 const activeButton = PrimaryColor;
 
 export default function StackMainApp() {
+  const {t} = useTranslation();
   const IconComponent = useCallback(
     (props: string, color: string = colorButton) => (
       <AntDesign name={props} size={25} color={color} />
@@ -29,8 +31,8 @@ export default function StackMainApp() {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: 'Keuangan Tracker',
-          tabBarLabel: 'Home',
+          title: t('app_name'),
+          tabBarLabel: t('home'),
           tabBarIcon: props => {
             return IconComponent(
               'home',
@@ -45,8 +47,8 @@ export default function StackMainApp() {
         name="CategoryScreen"
         component={CategoryScreen}
         options={{
-          title: 'Kategori',
-          tabBarLabel: 'Kategori',
+          title: t('category'),
+          tabBarLabel: t('category'),
           tabBarIcon: props => {
             return IconComponent(
               'inbox',
@@ -61,8 +63,8 @@ export default function StackMainApp() {
         name="AddScreen"
         component={AddScreen}
         options={{
-          title: 'Tambah Pemasukkan/Keluaran',
-          tabBarLabel: 'Tambah',
+          title: t('add_income_or_expense'),
+          tabBarLabel: t('add'),
           tabBarIcon: props => {
             return IconComponent(
               'pluscircle',
@@ -77,8 +79,8 @@ export default function StackMainApp() {
         name="ReportScreen"
         component={ReportScreen}
         options={{
-          title: 'Laporan Keuangan',
-          tabBarLabel: 'Laporan',
+          title: t('money_report'),
+          tabBarLabel: t('report'),
           tabBarIcon: props => {
             return IconComponent(
               'linechart',
@@ -93,8 +95,8 @@ export default function StackMainApp() {
         name="SettingScreen"
         component={SettingScreen}
         options={{
-          title: 'Pengaturan',
-          tabBarLabel: 'Pengaturan',
+          title: t('setting'),
+          tabBarLabel: t('setting'),
           tabBarIcon: props => {
             return IconComponent(
               'setting',

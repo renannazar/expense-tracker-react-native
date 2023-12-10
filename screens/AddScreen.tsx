@@ -23,8 +23,10 @@ import {CategoryItem} from '../models/CategoryItem';
 import {ExpenseItem} from '../models/ExpenseItem';
 import {useIsFocused} from '@react-navigation/native';
 import {numberWithCommas} from '../utils/NumberFormat';
+import {useTranslation} from 'react-i18next';
 
 function AddScreen({navigation}: {navigation: any}) {
+  const {t} = useTranslation();
   const [categories, setCategories] = useState<CategoryItem[]>([]);
 
   const loadDataCallback = useCallback(async () => {
@@ -114,17 +116,17 @@ function AddScreen({navigation}: {navigation: any}) {
               style={styles.selectInput}
               selectedValue={selectedType}
               onValueChange={setSelectedType}>
-              <Picker.Item label="Pengeluaran" value="Pengeluaran" />
-              <Picker.Item label="Pemasukkan" value="Pemasukkan" />
+              <Picker.Item label={t('expenses')} value="Pengeluaran" />
+              <Picker.Item label={t('income')} value="Pemasukkan" />
             </Picker>
           </View>
           <View style={styles.inputContainer}>
-            <Text>Pilih Kategori (Opsional)</Text>
+            <Text>{t('select_category_optional')}</Text>
             <Picker
               style={styles.selectInput}
               selectedValue={selectedKategori}
               onValueChange={setSelectedKategori}>
-              <Picker.Item label="Tanpa Kategori" value={0} />
+              <Picker.Item label={t('uncategorized')} value={0} />
               {categories.map(category => (
                 <Picker.Item
                   key={category.id}
@@ -135,12 +137,12 @@ function AddScreen({navigation}: {navigation: any}) {
             </Picker>
           </View>
           <View style={styles.inputContainer}>
-            <Text>Judul Kegiatan</Text>
+            <Text>{t('activity_title')}</Text>
             <TextInput
               style={styles.addInput}
               value={inputTitle}
               onChangeText={setInputTitle}
-              placeholder="Judul pemasukkan atau pengeluaran"
+              placeholder={t('activity_title_desc')}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -150,21 +152,24 @@ function AddScreen({navigation}: {navigation: any}) {
               keyboardType="decimal-pad"
               value={numberWithCommas(inputAmount)}
               onChangeText={setInputAmount}
-              placeholder="Total pemasukkan atau pengeluaran"
+              placeholder={t('total_income_or_expense')}
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text>Tanggal Kegiatan</Text>
+            <Text>{t('activity_date')}</Text>
             <TouchableOpacity
               onPress={openDatePicker}
               style={styles.inputDateButton}>
               <Text style={styles.inputDateLabel}>{selectedDate}</Text>
-              <Text>Ubah</Text>
+              <Text>{t('change')}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.inputContainer}>
             <TouchableOpacity onPress={submitAdd} style={styles.buttonSubmit}>
-              <Text style={GlobalStyles.colorWhite}>Tambah {selectedType}</Text>
+              <Text style={GlobalStyles.colorWhite}>
+                {t('add')}{' '}
+                {selectedType === 'Pemasukkan' ? t('income') : t('expenses')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

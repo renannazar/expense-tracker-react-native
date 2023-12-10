@@ -19,17 +19,19 @@ import {CategoryItemComponent} from '../components/CategoryItemComponent';
 import {CategoryItem} from '../models/CategoryItem';
 import {BlackColor, PrimaryColor} from '../utils/Color';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useTranslation} from 'react-i18next';
 
 function CategoryScreen() {
+  const {t} = useTranslation();
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [newCategory, setNewCategory] = useState('');
 
   const loadDataCallback = useCallback(async () => {
     try {
       const initCategory = [
-        {id: 1, name: 'Makanan dan Minuman'},
-        {id: 2, name: 'Belanja'},
-        {id: 3, name: 'Topup Game'},
+        {id: 1, name: t('food_and_drinks')},
+        {id: 2, name: t('shopping')},
+        {id: 3, name: t('holiday')},
       ];
       const db = await getDBConnection();
       await createTable(db);
@@ -44,7 +46,7 @@ function CategoryScreen() {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadDataCallback();
@@ -99,7 +101,7 @@ function CategoryScreen() {
               value={newCategory}
               style={styles.categoryInput}
               onChangeText={text => setNewCategory(text)}
-              placeholder="Tambah Kategori"
+              placeholder={t('add_category')}
             />
             <View>
               <TouchableOpacity
@@ -107,12 +109,12 @@ function CategoryScreen() {
                 onPress={addCategory}>
                 <View style={styles.categoryTouchableContent}>
                   <Icon name="plus" style={styles.colorWhite} />
-                  <Text style={styles.colorWhite}>Tambah</Text>
+                  <Text style={styles.colorWhite}>{t('add')}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
-          <Text style={styles.screenTitle}>Daftar Kategori</Text>
+          <Text style={styles.screenTitle}>{t('category_list')}</Text>
           <View style={styles.categoryItemContainer}>
             {categories.map((category, i) => (
               <CategoryItemComponent

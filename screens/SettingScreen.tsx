@@ -13,8 +13,11 @@ import {GlobalStyles} from '../styles';
 import RNFS from 'react-native-fs';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
+import {useTranslation} from 'react-i18next';
 
 function SettingScreen({navigation}: {navigation: any}) {
+  const {t} = useTranslation();
+
   const backupData = async () => {
     try {
       var libDirectory = RNFS.DocumentDirectoryPath.replace(
@@ -33,27 +36,26 @@ function SettingScreen({navigation}: {navigation: any}) {
 
       const readDownload = await RNFS.readDir(RNFS.DownloadDirectoryPath);
       console.log(readDownload);
-      Alert.alert('Berhasil Backup Database', `Tersimpan di ${targetBackup}`);
+      Alert.alert(
+        t('database_backup_success'),
+        `${t('saved_to')} ${targetBackup}`,
+      );
     } catch (error) {
       console.error(error);
     }
   };
 
   const restoreData = async () => {
-    Alert.alert(
-      'Apakah anda yakin?',
-      'Dengan melakukan Restore, data sebelumnya akan dihapus dan digantikan data yang baru',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Lanjutkan',
-          onPress: pickFileRestore,
-        },
-      ],
-    );
+    Alert.alert(t('are_you_sure'), t('restore_confirmation'), [
+      {
+        text: t('cancel'),
+        style: 'cancel',
+      },
+      {
+        text: t('procced'),
+        onPress: pickFileRestore,
+      },
+    ]);
   };
 
   const pickFileRestore = async () => {
@@ -84,30 +86,22 @@ function SettingScreen({navigation}: {navigation: any}) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.textLabel}>Tentang Keuangan Tracker App</Text>
-        <Text>
-          Keuangan Tracker merupakan aplikasi sederhana yang dikembangkan untuk
-          kebutuhan pencatatan laporan keuangan pengguna secara simple dan mudah
-          untuk digunakan. Privasi sangat terjamin, semua data tersimpan pada
-          smartphone pengguna, kami tidak menyimpan satupun laporan pengguna
-          aplikasi
+        <Text style={styles.textLabel}>
+          {t('about')} {t('app_name')}
         </Text>
-        <Text style={styles.textCaution}>
-          PERHATIAN : Ketika pengguna melakukan uninstall atau menghapus data
-          aplikasi, maka seluruh data akan terhapus sepenuhnya. Silahkan backup
-          data terlebih dahulu
-        </Text>
+        <Text>{t('app_description')}</Text>
+        <Text style={styles.textCaution}>{t('backup_notice')}</Text>
 
         <TouchableOpacity style={styles.btnBackup} onPress={backupData}>
-          <Text style={GlobalStyles.colorWhite}>Backup Data</Text>
+          <Text style={GlobalStyles.colorWhite}>{t('backup')} Data</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRestore} onPress={restoreData}>
-          <Text style={GlobalStyles.colorWhite}>Restore Data</Text>
+          <Text style={GlobalStyles.colorWhite}>{t('restore')} Data</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnLaunch}
           onPress={launchStackFirstApp}>
-          <Text>Ubah Bahasa dan Mata Uang</Text>
+          <Text>{t('change_language_and_currency')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {BlackColor, RedColor} from '../utils/Color';
 import {numberWithCommas} from '../utils/NumberFormat';
 import {GlobalStyles} from '../styles';
+import {useTranslation} from 'react-i18next';
 
 export const ExpenseItemComponent: React.FC<{
   expense: ExpenseItem;
@@ -21,6 +22,8 @@ export const ExpenseItemComponent: React.FC<{
   on_delete,
   currency,
 }) => {
+  const {t} = useTranslation();
+
   return (
     <View style={styles.expenseItem}>
       {group_date !== '' ? (
@@ -52,7 +55,7 @@ export const ExpenseItemComponent: React.FC<{
         <TouchableOpacity onPress={() => on_delete(id, index)}>
           <View style={styles.expenseDeleteContainer}>
             <Icon name="trash" color={RedColor} />
-            <Text style={styles.expenseDelete}>Hapus</Text>
+            <Text style={styles.expenseDelete}>{t('delete')}</Text>
           </View>
         </TouchableOpacity>
       </View>

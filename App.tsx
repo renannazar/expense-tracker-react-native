@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import StackWithBottomNavigation from './screens/StackMainApp';
 import StackFirstApp from './screens/StackFirstApp';
 import {MMKV} from 'react-native-mmkv';
+import './localization/i18n';
 
 const Stack = createNativeStackNavigator();
 

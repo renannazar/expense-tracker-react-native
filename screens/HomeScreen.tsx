@@ -22,8 +22,10 @@ import {ExpenseItemComponent} from '../components/ExpenseItemComponent';
 import {CategoryItem} from '../models/CategoryItem';
 import {numberWithCommas} from '../utils/NumberFormat';
 import {MMKV} from 'react-native-mmkv';
+import {useTranslation} from 'react-i18next';
 
 function HomeScreen({navigation}: {navigation: any}) {
+  const {t} = useTranslation();
   const [expenses, setExpenses] = useState<ExpenseItem[]>([]);
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [summarySpend, setSummarySpend] = useState<string>('0');
@@ -85,7 +87,7 @@ function HomeScreen({navigation}: {navigation: any}) {
     if (findCat) {
       return findCat.name;
     }
-    return 'Tanpa Kategori  ';
+    return t('uncategorized');
   };
 
   const getGroupDate = (expense: ExpenseItem, index: number) => {
@@ -145,7 +147,7 @@ function HomeScreen({navigation}: {navigation: any}) {
           <View style={styles.heroCardContainer}>
             <View style={styles.heroCardItem}>
               <Icon name="minus" color={RedColor} size={25} />
-              <Text style={styles.heroCardItemTitle}>Pengeluaran</Text>
+              <Text style={styles.heroCardItemTitle}>{t('expenses')}</Text>
               <Text>
                 {appCurrency}
                 {numberWithCommas(summarySpend)}
@@ -153,7 +155,7 @@ function HomeScreen({navigation}: {navigation: any}) {
             </View>
             <View style={styles.heroCardItem}>
               <Icon name="plus" color={GreenColor} size={25} />
-              <Text style={styles.heroCardItemTitle}>Pemasukkan</Text>
+              <Text style={styles.heroCardItemTitle}>{t('income')}</Text>
               <Text>
                 {appCurrency}
                 {numberWithCommas(summaryIncome)}
@@ -161,7 +163,7 @@ function HomeScreen({navigation}: {navigation: any}) {
             </View>
             <View style={styles.heroCardItem}>
               <Icon name="credit-card" color={BlackColor} size={25} />
-              <Text style={styles.heroCardItemTitle}>Penyimpanan</Text>
+              <Text style={styles.heroCardItemTitle}>{t('saving')}</Text>
               <Text>
                 {appCurrency}
                 {numberWithCommas(summarySaving)}

@@ -14,8 +14,10 @@ import {Picker} from '@react-native-picker/picker';
 import {ExpenseMonthItem} from '../models/ExpenseMonthItem';
 import {ExpenseMonthItemComponent} from '../components/ExpenseMonthItemComponent';
 import {MMKV} from 'react-native-mmkv';
+import {useTranslation} from 'react-i18next';
 
 function ReportScreen() {
+  const {t} = useTranslation();
   const [expenses, setExpenses] = useState<ExpenseDayItem[]>([]);
   const [monthExpenses, setMonthExpenses] = useState<ExpenseMonthItem[]>([]);
   const [selectedType, setSelectedType] = useState('Harian');
@@ -83,13 +85,13 @@ function ReportScreen() {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text>Pilih Kategori Laporan</Text>
+        <Text>{t('select_report_category')}</Text>
         <Picker
           style={styles.selectInput}
           selectedValue={selectedType}
           onValueChange={setSelectedType}>
-          <Picker.Item label="Harian" value="Harian" />
-          <Picker.Item label="Bulanan" value="Bulanan" />
+          <Picker.Item label={t('daily')} value="Harian" />
+          <Picker.Item label={t('monthly')} value="Bulanan" />
         </Picker>
       </View>
       <ScrollView>
