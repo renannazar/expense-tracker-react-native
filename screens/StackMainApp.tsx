@@ -11,6 +11,7 @@ import {
 } from '.';
 import {BlackColor, PrimaryColor} from '../utils/Color';
 import {useTranslation} from 'react-i18next';
+import {useColorScheme} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const colorButton = BlackColor;
@@ -18,11 +19,17 @@ const activeButton = PrimaryColor;
 
 export default function StackMainApp() {
   const {t} = useTranslation();
+  const theme = useColorScheme();
+
   const IconComponent = useCallback(
-    (props: string, color: string = colorButton) => (
-      <AntDesign name={props} size={25} color={color} />
+    (props: string, _color: string = colorButton) => (
+      <AntDesign
+        name={props}
+        size={25}
+        color={theme === 'dark' ? '#FFFFFF' : colorButton}
+      />
     ),
-    [],
+    [theme],
   );
 
   return (

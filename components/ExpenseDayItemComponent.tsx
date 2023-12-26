@@ -15,7 +15,7 @@ export const ExpenseDayItemComponent: React.FC<{
       <View style={styles.expenseContainer}>
         <View style={styles.expenseTextContainer}>
           <View>
-            <Text>{type}</Text>
+            <Text style={GlobalStyles.colorDark}>{type}</Text>
             <Text style={styles.sectionTitle}>{date}</Text>
           </View>
           {type === 'Pengeluaran' ? (

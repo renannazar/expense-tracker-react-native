@@ -1,6 +1,6 @@
 import i18n, {LanguageDetectorModule} from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import {en, id} from './translations';
+import {en, id, hi} from './translations';
 import {MMKV} from 'react-native-mmkv';
 
 const STORE_LANGUAGE_KEY = 'app_lang';
@@ -27,6 +27,9 @@ const resources = {
   },
   id: {
     translation: id,
+  },
+  hi: {
+    translation: hi,
   },
 };
 

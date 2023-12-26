@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  useColorScheme,
 } from 'react-native';
 import {
   createTable,
@@ -25,6 +26,9 @@ function CategoryScreen() {
   const {t} = useTranslation();
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [newCategory, setNewCategory] = useState('');
+
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
 
   const loadDataCallback = useCallback(async () => {
     try {
@@ -102,6 +106,7 @@ function CategoryScreen() {
               style={styles.categoryInput}
               onChangeText={text => setNewCategory(text)}
               placeholder={t('add_category')}
+              placeholderTextColor={BlackColor}
             />
             <View>
               <TouchableOpacity
@@ -114,7 +119,10 @@ function CategoryScreen() {
               </TouchableOpacity>
             </View>
           </View>
-          <Text style={styles.screenTitle}>{t('category_list')}</Text>
+          <Text
+            style={isDarkTheme ? styles.screenTitleDark : styles.screenTitle}>
+            {t('category_list')}
+          </Text>
           <View style={styles.categoryItemContainer}>
             {categories.map((category, i) => (
               <CategoryItemComponent
@@ -169,5 +177,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: BlackColor,
+  },
+  screenTitleDark: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#dadada',
   },
 });

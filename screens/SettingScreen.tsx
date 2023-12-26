@@ -111,7 +111,6 @@ function SettingScreen({navigation}: {navigation: any}) {
 export default SettingScreen;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1f1f1',
     padding: 10,
   },
   textLabel: {

@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {CategoryItem} from '../models/CategoryItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {GlobalStyles} from '../styles';
+import {BlackColor} from '../utils/Color';
 
 export const CategoryItemComponent: React.FC<{
   category: CategoryItem;
@@ -11,7 +13,7 @@ export const CategoryItemComponent: React.FC<{
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.categoryTextContainer}>
-        <Text>{index + 1}.</Text>
+        <Text style={GlobalStyles.colorDark}>{index + 1}.</Text>
         <Text style={styles.sectionTitle}>{name}</Text>
         <TouchableOpacity
           style={styles.categoryDelete}
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400',
     flex: 1,
+    color: BlackColor,
   },
   categoryDelete: {
     backgroundColor: 'red',

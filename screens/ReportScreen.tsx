@@ -104,7 +104,6 @@ function ReportScreen() {
 export default ReportScreen;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1f1f1',
     padding: 10,
   },
   touchableOpacityStyle: {
@@ -141,7 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   selectInput: {
-    backgroundColor: 'white',
     marginTop: 5,
   },
 });

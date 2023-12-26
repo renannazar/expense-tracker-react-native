@@ -1,16 +1,22 @@
 import React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import StackWithBottomNavigation from './screens/StackMainApp';
 import StackFirstApp from './screens/StackFirstApp';
 import {MMKV} from 'react-native-mmkv';
 import './localization/i18n';
+import {useColorScheme} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   const storage = new MMKV();
+  const theme = useColorScheme();
 
   var isFirstOpen = storage.getBoolean('app_first_open');
   var appLang = storage.getString('app_lang');
@@ -24,7 +30,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
         initialRouteName={isFirstOpen ? 'stackFirstApp' : 'stackMainApp'}>

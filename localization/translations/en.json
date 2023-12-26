@@ -41,5 +41,6 @@
   "total_income_or_expense": "Total income or expenditure",
   "activity_date": "Activity Date",
   "change": "Change",
-  "delete": "Delete"
+  "delete": "Delete",
+  "select_type": "Select Type"
 }

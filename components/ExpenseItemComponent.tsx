@@ -37,7 +37,7 @@ export const ExpenseItemComponent: React.FC<{
       <View style={styles.expenseContainer}>
         <View style={styles.expenseTextContainer}>
           <View>
-            <Text>{cat_name}</Text>
+            <Text style={GlobalStyles.colorDark}>{cat_name}</Text>
             <Text style={styles.sectionTitle}>{title}</Text>
           </View>
           {type === 'Pengeluaran' ? (

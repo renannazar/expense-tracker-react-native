@@ -41,5 +41,6 @@
   "total_income_or_expense": "Total pemasukkan atau pengeluaran",
   "activity_date": "Tanggal Kegiatan",
   "change": "Ubah",
-  "delete": "Hapus"
+  "delete": "Hapus",
+  "select_type": "Pilih tipe"
 }

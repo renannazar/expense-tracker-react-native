@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {PrimaryColor} from '../utils/Color';
+import {GrayColor, PrimaryColor} from '../utils/Color';
 import {GlobalStyles} from '../styles';
 import {
   createTable,
@@ -111,7 +111,7 @@ function AddScreen({navigation}: {navigation: any}) {
       <ScrollView>
         <View style={styles.addContainer}>
           <View style={styles.inputContainer}>
-            <Text>Pilih Jenis Keuangan</Text>
+            <Text>{t('select_type')}</Text>
             <Picker
               style={styles.selectInput}
               selectedValue={selectedType}
@@ -143,16 +143,21 @@ function AddScreen({navigation}: {navigation: any}) {
               value={inputTitle}
               onChangeText={setInputTitle}
               placeholder={t('activity_title_desc')}
+              placeholderTextColor={GrayColor}
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text>Total {selectedType}</Text>
+            <Text>
+              Total{' '}
+              {selectedType === 'Pemasukkan' ? t('income') : t('expenses')}
+            </Text>
             <TextInput
               style={styles.addInput}
               keyboardType="decimal-pad"
               value={numberWithCommas(inputAmount)}
               onChangeText={setInputAmount}
               placeholder={t('total_income_or_expense')}
+              placeholderTextColor={GrayColor}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -161,7 +166,7 @@ function AddScreen({navigation}: {navigation: any}) {
               onPress={openDatePicker}
               style={styles.inputDateButton}>
               <Text style={styles.inputDateLabel}>{selectedDate}</Text>
-              <Text>{t('change')}</Text>
+              <Text style={GlobalStyles.colorDark}>{t('change')}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.inputContainer}>
@@ -186,7 +191,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectInput: {
-    backgroundColor: 'white',
     marginTop: 5,
   },
   addInput: {
@@ -208,6 +212,7 @@ const styles = StyleSheet.create({
   inputDateLabel: {
     flex: 1,
     fontWeight: 'bold',
+    color: GrayColor,
   },
   buttonSubmit: {
     flex: 1,

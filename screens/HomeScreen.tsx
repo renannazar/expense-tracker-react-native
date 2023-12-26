@@ -23,6 +23,7 @@ import {CategoryItem} from '../models/CategoryItem';
 import {numberWithCommas} from '../utils/NumberFormat';
 import {MMKV} from 'react-native-mmkv';
 import {useTranslation} from 'react-i18next';
+import {GlobalStyles} from '../styles';
 
 function HomeScreen({navigation}: {navigation: any}) {
   const {t} = useTranslation();
@@ -148,7 +149,7 @@ function HomeScreen({navigation}: {navigation: any}) {
             <View style={styles.heroCardItem}>
               <Icon name="minus" color={RedColor} size={25} />
               <Text style={styles.heroCardItemTitle}>{t('expenses')}</Text>
-              <Text>
+              <Text style={GlobalStyles.colorDark}>
                 {appCurrency}
                 {numberWithCommas(summarySpend)}
               </Text>
@@ -156,7 +157,7 @@ function HomeScreen({navigation}: {navigation: any}) {
             <View style={styles.heroCardItem}>
               <Icon name="plus" color={GreenColor} size={25} />
               <Text style={styles.heroCardItemTitle}>{t('income')}</Text>
-              <Text>
+              <Text style={GlobalStyles.colorDark}>
                 {appCurrency}
                 {numberWithCommas(summaryIncome)}
               </Text>
@@ -164,7 +165,7 @@ function HomeScreen({navigation}: {navigation: any}) {
             <View style={styles.heroCardItem}>
               <Icon name="credit-card" color={BlackColor} size={25} />
               <Text style={styles.heroCardItemTitle}>{t('saving')}</Text>
-              <Text>
+              <Text style={GlobalStyles.colorDark}>
                 {appCurrency}
                 {numberWithCommas(summarySaving)}
               </Text>

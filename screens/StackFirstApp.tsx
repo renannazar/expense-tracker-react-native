@@ -23,6 +23,10 @@ function StackFirstApp({navigation}: {navigation: any}) {
       id: 'id',
       name: 'Indonesia',
     },
+    {
+      id: 'hi',
+      name: 'Hindi (India)',
+    },
   ];
 
   const storage = new MMKV();
@@ -96,12 +100,10 @@ export default StackFirstApp;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1f1f1',
     padding: 10,
   },
   textTitle: {
     fontSize: 18,
-    color: '#000',
     marginTop: 10,
   },
   textCaution: {

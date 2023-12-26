@@ -10,4 +10,7 @@ export const GlobalStyles = StyleSheet.create({
   colorGreen: {
     color: 'green',
   },
+  colorDark: {
+    color: '#242424',
+  },
 });
